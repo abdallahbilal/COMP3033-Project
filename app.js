@@ -7,6 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var footballTeamsRouter = require('./routes/football/footballteams');
+var playersRouter = require('./routes/football/players');
 
 var configs = require('./config/global');
 var mongoose = require('mongoose');
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/football-teams', footballTeamsRouter);
+app.use('/players', playersRouter);
 
 mongoose.connect(configs.connectionString.MongoDB)
   .then(() => {
