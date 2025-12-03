@@ -6,6 +6,10 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var footballTeamsRouter = require('./routes/football/footballteams');
+
+var configs = require('./config/global');
+var mongoose = require('mongoose');
 
 var app = express();
 
@@ -21,6 +25,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/football-teams', footballTeamsRouter);
+
+mongoose.connect(configs.connectionString.MongoDB)
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((err) => {
+    console.error('Error connecting to MongoDB:', err);
+  }); 
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
