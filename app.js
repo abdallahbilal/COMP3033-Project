@@ -4,6 +4,35 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var cors = require("cors");
+// Packages for Documenting the API
+var swaggerUI = require("swagger-ui-express");
+// Comments approach
+var swaggerJSDoc = require("swagger-jsdoc");
+var options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Football Teams API",
+      version: "1.0.0",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000/football-teams",
+      }
+    ]
+  },
+  apis: ["./routes/football/*.js"], // paths to files containing annotations
+}
+var swaggerSpec = swaggerJSDoc(options);
+// Load file from URL
+// var specfileURL = "http://petstore.swagger.io/v2/swagger.json";
+// var optionsForURL = {
+//   swaggerOptions: {
+//     url: specfileURL
+//   }
+// }
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var footballTeamsRouter = require('./routes/football/footballteams');
@@ -23,6 +52,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
+app.use("/docs/dynamic", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

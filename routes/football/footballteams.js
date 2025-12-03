@@ -1,7 +1,146 @@
+
+
 //This is the football teams route
 const express = require('express');
 const router = express.Router();
 const FootballTeam = require('../../models/Football-Team');
+
+/**
+ * @openapi
+ * tags:
+ *   - name: FootballTeams
+ *     description: API for managing football teams
+ *
+ * /:
+ *   get:
+ *     summary: Get all football teams
+ *     tags: [FootballTeams]
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved football teams
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/FootballTeam'
+ *
+ *   post:
+ *     summary: Create a new football team
+ *     tags: [FootballTeams]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/FootballTeamInput'
+ *     responses:
+ *       201:
+ *         description: Football team created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/FootballTeam'
+ *       400:
+ *         description: Validation error
+ *       500:
+ *         description: Server error
+ *
+ * 
+ * /{_id}:
+ *   put:
+ *     summary: Update a football team by ID
+ *     tags: [FootballTeams]
+ *     parameters:
+ *       - in: path
+ *         name: _id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Football team ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/FootballTeamInput'
+ *     responses:
+ *       200:
+ *         description: Football team updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/FootballTeam'
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: Football team not found
+ *       500:
+ *         description: Server error
+ *
+ *   delete:
+ *     summary: Delete a football team by ID
+ *     tags: [FootballTeams]
+ *     parameters:
+ *       - in: path
+ *         name: _id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Football team ID
+ *     responses:
+ *       200:
+ *         description: Football team deleted successfully
+ *       404:
+ *         description: Football team not found
+ *       500:
+ *         description: Server error
+ *
+ *
+ * components:
+ *   schemas:
+ *     FootballTeam:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *         TeamName:
+ *           type: string
+ *         City:
+ *           type: string
+ *         Players:
+ *           type: array
+ *           items:
+ *             type: string
+ *         Coach:
+ *           type: string
+ *         League:
+ *           type: string
+ *         Position:
+ *           type: string
+ *       required:
+ *         - TeamName
+ *
+ *     FootballTeamInput:
+ *       type: object
+ *       properties:
+ *         TeamName:
+ *           type: string
+ *         City:
+ *           type: string
+ *         Players:
+ *           type: array
+ *           items:
+ *             type: string
+ *         Coach:
+ *           type: string
+ *         League:
+ *           type: string
+ *         Position:
+ *           type: string
+ *       required:
+ *         - TeamName
+ */
 
 
 
