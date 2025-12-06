@@ -11,7 +11,7 @@ const FootballTeam = require('../../models/Football-Team');
  *   - name: FootballTeams
  *     description: API for managing football teams
  *
- * /:
+ * /football-teams:
  *   get:
  *     summary: Get all football teams
  *     tags: [FootballTeams]
