@@ -1,7 +1,4 @@
 
-
-
-
 //This is the  players route
 const express = require('express');
 const router = express.Router();
@@ -116,5 +113,7 @@ router.post('/', async (req, res, next) => {
         next(error);
     }
 });
+
+
 
 module.exports = router;    

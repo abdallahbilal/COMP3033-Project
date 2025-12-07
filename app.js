@@ -9,7 +9,7 @@ const passport = require('passport');
 const BasicStrategy = require('passport-http').BasicStrategy;
 
 var cors = require("cors");
-// Packages for Documenting the API
+//////////////////////////Swagger Setup//////////////////////////
 var swaggerUI = require("swagger-ui-express");
 var swaggerJSDoc = require("swagger-jsdoc");
 var options = {
@@ -28,6 +28,7 @@ var options = {
   apis: ["./routes/**/*.js"], // paths to files containing annotations
 }
 var swaggerSpec = swaggerJSDoc(options);
+//////////////////////////End of Swagger Setup//////////////////////////
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -50,6 +51,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
+//////////////////////////Passport Configuration//////////////////////////
 // Basic HTTP Authentication strategy
 passport.use(new BasicStrategy((username, password, done) => {
   // eduardojaime:football@123 encoded as ZWR1YXJkb2phaW1lOmZvb3RiYWxsQDEyMw==
@@ -64,7 +66,7 @@ passport.use(new BasicStrategy((username, password, done) => {
   }
 }));
 
-
+//////////////////////////End of Passport Configuration//////////////////////////
 app.use(cors());
 app.use("/docs/dynamic", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
@@ -75,11 +77,11 @@ app.use("/docs/dynamic", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.use('/', indexRouter);
 
 app.use('/football-teams', passport.authenticate('basic', { session: false }), footballTeamsRouter);
-//app.use('/players', passport.authenticate('basic', { session: false }), playersRouter);
+app.use('/players', passport.authenticate('basic', { session: false }), playersRouter);
 
 app.use('/users', usersRouter);
 //app.use('/football-teams', footballTeamsRouter);
-app.use('/players', playersRouter);
+//app.use('/players', playersRouter);
 
 mongoose.connect(configs.connectionString.MongoDB)
   .then(() => {

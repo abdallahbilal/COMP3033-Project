@@ -148,6 +148,7 @@ const FootballTeam = require('../../models/Football-Team');
 router.get('/', async (req, res, next) => {
   let footballTeams =  await FootballTeam.find();
   res.status(200).json(footballTeams);
+  
 });
 
 
@@ -197,6 +198,9 @@ router.get("/football-teams/TeamName", async (req, res, next) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+
+
 
 /* Update football team by ID */
 router.put('/:_id', async (req, res, next) => {
